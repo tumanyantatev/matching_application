@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Matching Results</title>
+
+    <!--Bootstrap 4-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container py-5">
+    <div class="row">
+        <div class="col-10 mx-auto">
+            <div th:if="${!status}">
+                <!--display error if any-->
+                <div class="alert alert-danger" role="alert">
+                    <strong>Error:</strong>
+                    <span th:text="${message}"></span>
+                </div>
+            </div>
+
+            <!--display pairing list-->
+            <div th:if="${status}">
+                <h3 th:text="${'Best Average Score is ' + result.getAverageMatchingScore() + '%'}"></h3>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Match Score</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="pair, i : ${result.getPairings()}">
+                        <th scope="row" th:text="${i.index + 1}"></th>
+                        <td th:text="${pair.getFirstEmployee().getName()}"></td>
+                        <td th:text="${pair.getSecondEmployee().getName()}"></td>
+                        <td th:text="${pair.getScore() + '%'}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
